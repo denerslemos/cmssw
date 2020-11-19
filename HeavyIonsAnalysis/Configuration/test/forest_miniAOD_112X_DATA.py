@@ -32,7 +32,7 @@ process.source = cms.Source("PoolSource",
 
 # number of events to process, set to -1 to process all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10)
+    input = cms.untracked.int32(-1)
     )
 
 ###############################################################################
@@ -97,7 +97,7 @@ process.TFileService = cms.Service("TFileService",
 # process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cfi')
 process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
 #process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cfi')
-#process.load('HeavyIonsAnalysis.EventAnalysis.skimanalysis_cfi')
+process.load('HeavyIonsAnalysis.EventAnalysis.skimanalysis_cfi')
 #process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
 #process.load('HeavyIonsAnalysis.EventAnalysis.l1object_cfi')
 
@@ -126,9 +126,19 @@ process.forest = cms.Path(
     # process.hltanalysis +
     process.trackSequencePbPb +
     # process.particleFlowAnalyser +
-    process.hiEvtAnalyzer +
+    process.hiEvtAnalyzer 
     process.ggHiNtuplizer +
     process.akCs4PFJetAnalyzer
     )
 
-#customisation
+#customisatio
+
+#########################
+# Event Selection -> add the needed filters here (PS: not possible for beamScr
+#########################
+
+process.load('HeavyIonsAnalysis.EventAnalysis.collisionEventSelection_cff')
+process.pclusterCompatibilityFilter = cms.Path(process.clusterCompatibilityFilter)
+process.pprimaryVertexFilter = cms.Path(process.primaryVertexFilter)
+process.pAna = cms.EndPath(process.skimanalysis)
+

@@ -102,3 +102,8 @@ process.forest = cms.Path(
 
 #customisation
 #process.akCs4PFJetAnalyzer.doLifeTimeTagging = False
+
+process.load('HeavyIonsAnalysis.EventAnalysis.collisionEventSelection_cff')
+process.pclusterCompatibilityFilter = cms.Path(process.clusterCompatibilityFilter)
+process.pprimaryVertexFilter = cms.Path(process.primaryVertexFilter)
+process.pAna = cms.EndPath(process.skimanalysis)
